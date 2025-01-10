@@ -1,221 +1,45 @@
-# API Documentation
+# E-Commerce Go Server
 
-## User Endpoints
+This project is an e-commerce backend API built with Go and the Gin framework.
 
-### Register User
+## Authors
 
-- **URL:** `/register`
-- **Method:** `POST`
-- **Description:** Register a new user.
-- **Request Body:**
-  ```json
-  {
-    "username": "string",
-    "email": "string",
-    "password": "string",
-    "role": "string"
-  }
-  ```
-- **Response:**
-  - **201 Created:**
-    ```json
-    {
-      "message": "User registered successfully"
-    }
-    ```
-  - **400 Bad Request:**
-    ```json
-    {
-      "error": "Validation error message"
-    }
-    ```
+- [@fathanabds](https://github.com/fathanabds)
 
-### Login User
+## Environment Variables
 
-- **URL:** `/login`
-- **Method:** `POST`
-- **Description:** Login a user.
-- **Request Body:**
-  ```json
-  {
-    "email": "string",
-    "password": "string"
-  }
-  ```
-- **Response:**
-  - **200 OK:**
-    ```json
-    {
-      "message": "Login successful",
-      "token": "jwt_token"
-    }
-    ```
-  - **400 Bad Request:**
-    ```json
-    {
-      "error": "Validation error message"
-    }
-    ```
-  - **401 Unauthorized:**
-    ```json
-    {
-      "error": "Invalid email or password"
-    }
-    ```
+To run this project, you will need to add the following environment variables to your .env file
 
-## Product Endpoints
+`JWT_SECRET`
 
-### Get Products
+## Features
 
-- **URL:** `/products`
-- **Method:** `GET`
-- **Description:** Get all products.
-- **Headers:**
-  - `Authorization: Bearer <jwt_token>`
-- **Response:**
-  - **200 OK:**
-    ```json
-    {
-      "message": "Products fetched successfully",
-      "products": [
-        {
-          "id": 1,
-          "name": "Product A",
-          "price": 10000
-        },
-        {
-          "id": 2,
-          "name": "Product B",
-          "price": 20000
-        }
-      ]
-    }
-    ```
-  - **200 OK (No products available):**
-    ```json
-    {
-      "message": "No products available",
-      "products": []
-    }
-    ```
+- User Authentication: Register a New User, Login a User and Generate a JWT Token
+- Product Management: Get a List of All Products, Add a New Product (Admin Only)
+- Cart Management: Add a Product to the User’s Cart, Get the User’s Cart
 
-### Add Product
+## Run Locally
 
-- **URL:** `/products`
-- **Method:** `POST`
-- **Description:** Add a new product (Admin only).
-- **Headers:**
-  - `Authorization: Bearer <jwt_token>`
-- **Request Body:**
-  ```json
-  {
-    "name": "string",
-    "price": "number"
-  }
-  ```
-- **Response:**
-  - **201 Created:**
-    ```json
-    {
-      "message": "Product added successfully",
-      "product": {
-        "id": 3,
-        "name": "Product C",
-        "price": 30000
-      }
-    }
-    ```
-  - **400 Bad Request:**
-    ```json
-    {
-      "error": "Validation error message"
-    }
-    ```
-  - **403 Forbidden:**
-    ```json
-    {
-      "error": "You do not have permission"
-    }
-    ```
+Clone the project
 
-## Cart Endpoints
+```bash
+  git clone https://github.com/fathanabds/ecommerce-go-server.git
+```
 
-### Add to Cart
+Go to the project directory
 
-- **URL:** `/carts`
-- **Method:** `POST`
-- **Description:** Add a product to the cart.
-- **Headers:**
-  - `Authorization: Bearer <jwt_token>`
-- **Request Body:**
-  ```json
-  {
-    "product_id": "number",
-    "quantity": "number"
-  }
-  ```
-- **Response:**
-  - **200 OK:**
-    ```json
-    {
-      "message": "Product added to cart",
-      "cart": [
-        {
-          "product_id": 1,
-          "quantity": 2
-        }
-      ]
-    }
-    ```
-  - **400 Bad Request:**
-    ```json
-    {
-      "error": "Invalid input"
-    }
-    ```
-  - **404 Not Found:**
-    ```json
-    {
-      "error": "Product not found"
-    }
-    ```
+```bash
+  cd ecommerce-go-server
+```
 
-### Get Cart
+Install dependencies
 
-- **URL:** `/carts`
-- **Method:** `GET`
-- **Description:** Get the user's cart.
-- **Headers:**
-  - `Authorization: Bearer <jwt_token>`
-- **Response:**
-  - **200 OK:**
-    ```json
-    {
-      "message": "Cart fetched successfully",
-      "cart": [
-        {
-          "product_id": 1,
-          "quantity": 2
-        }
-      ]
-    }
-    ```
-  - **200 OK (Cart is empty):**
-    ```json
-    {
-      "message": "Cart is empty",
-      "cart": []
-    }
-    ```
+```bash
+  go mod tidy
+```
 
-## Middleware
+Start the server
 
-### JWT Authentication Middleware
-
-- **Description:** Validates the JWT token and sets user information in the context.
-- **Usage:** Applied to routes that require authentication.
-
-### Role Authorization Middleware
-
-- **Description:** Verifies the user's role.
-- **Usage:** Applied to routes that require specific roles (e.g., admin).
+```bash
+  go run main.go
+```
